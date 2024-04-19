@@ -14,7 +14,7 @@
  * Definition for test functions
  */
 
-FXLS89xx_Arduino fxls89xx;
+FXLS89xx fxls89xx;
 
 /*
  * Functions
@@ -30,10 +30,10 @@ void setup() {
   uint8_t whoami = fxls89xx.init();
   Serial.print("WHO_AM_I: ");
   Serial.println(whoami, HEX);
-  fxls89xx.wake_odr = FXLS89xx_ODR_6_25HZ;
-  fxls89xx.wake_pm  = FXLS89xx_HPM;
-  fxls89xx.sensor_range = FXLS89xx_RANGE_2G;
-  fxls89xx.sdcd(FXLS89xx_ABSOLUTE, FXLS89xx_Z, false, 700, 300);
+  fxls89xx.wake_odr = FXLS89xx::_6_25HZ;
+  fxls89xx.wake_pm  = FXLS89xx::_HPM;
+  fxls89xx.sensor_range = FXLS89xx::_2G;
+  fxls89xx.sdcd(FXLS89xx::_ABSOLUTE, FXLS89xx::___Z, false, 700, 300);
   fxls89xx.run();
 }
 

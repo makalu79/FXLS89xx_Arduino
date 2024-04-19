@@ -14,7 +14,7 @@
  * Definition for test functions
  */
 
-FXLS89xx_Arduino fxls89xx;
+FXLS89xx fxls89xx;
 float upper_threshold=100;
 float lower_threshold=-100;
 float previousZ;
@@ -33,13 +33,13 @@ void setup() {
   uint8_t whoami = fxls89xx.init();
   Serial.print("WHO_AM_I: ");
   Serial.println(whoami, HEX);
-  fxls89xx.wake_odr = FXLS89xx_ODR_12_5HZ;
-  fxls89xx.wake_pm  = FXLS89xx_HPM;
-  fxls89xx.sleep_odr = FXLS89xx_ODR_1_563HZ;
-  fxls89xx.sleep_pm  = FXLS89xx_LPM;
-  fxls89xx.sensor_range = FXLS89xx_RANGE_2G;
+  fxls89xx.wake_odr = FXLS89xx::_12_5HZ;
+  fxls89xx.wake_pm  = FXLS89xx::_HPM;
+  fxls89xx.sleep_odr = FXLS89xx::_1_563HZ;
+  fxls89xx.sleep_pm  = FXLS89xx::_LPM;
+  fxls89xx.sensor_range = FXLS89xx::_2G;
   fxls89xx.sdcd_wt = false;
-  fxls89xx.sdcd(FXLS89xx_DIFF_PREVIOUS, FXLS89xx_Z, upper_threshold, lower_threshold);
+  fxls89xx.sdcd(FXLS89xx::_DIFFPREV, FXLS89xx::___Z, upper_threshold, lower_threshold);
   fxls89xx.enable_sleep(5);
   fxls89xx.run();
 }
