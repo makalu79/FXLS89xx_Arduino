@@ -2,7 +2,7 @@
  * Copyright 2023 ryraki
  * All rights reserved.
  *
- * SPDX-License-Identifier: BSD-3-Clause
+ * SPDX-License-Identifier: MIT
  */
 /**
  * @file example_SDCD_fixed.ino
@@ -33,7 +33,7 @@ void setup() {
   fxls89xx.wake_odr = FXLS89xx::_6_25HZ;
   fxls89xx.wake_pm  = FXLS89xx::_HPM;
   fxls89xx.sensor_range = FXLS89xx::_2G;
-  fxls89xx.sdcd(FXLS89xx::_ABSOLUTE, FXLS89xx::___Z, false, 700, 300);
+  fxls89xx.sdcd(FXLS89xx::_ABSOLUTE, FXLS89xx::___Z, 700, 300);
   fxls89xx.run();
 }
 
