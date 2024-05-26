@@ -2,7 +2,7 @@
  * Copyright 2023 ryraki
  * All rights reserved.
  *
- * SPDX-License-Identifier: BSD-3-Clause
+ * SPDX-License-Identifier: MIT
  */
 /**
  * @file example_EXT_TRIG.ino
