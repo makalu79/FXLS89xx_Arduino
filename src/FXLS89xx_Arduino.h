@@ -627,9 +627,8 @@ class FXLS89xx : public I2C_device{
 
     /**
     * @brief Initialize the pin configurations and register for EXT_TRIG mode
-    * @param pinconfig If you wouldn't like to config the pins by this function, put false in this parameter. This parameter can be skipped.
     */
-    void EXT_TRIG_init(bool pinconfig=true);
+    void EXT_TRIG_init();
 
     /**
     * @brief Trigger the pin to start one-time conversion. Make sure once EXT_TRIG init is done first.
@@ -638,10 +637,9 @@ class FXLS89xx : public I2C_device{
 
     /**
     * @brief Initialize the device with reset
-    * @param pinconfig If you wouldn't like to config the pins by this function, put false in this parameter. This parameter can be skipped.
     * @return WHO_AM_I register value
     */
-    uint8_t init(bool pinconfig=true);
+    uint8_t init();
 
     /** Create a FXLS89xx_Arduino instance
     * @param i2c_address If the device is configured with SA0=H, put FXLS896x_DEVICE_ADDRESS_SA0_1.
