@@ -26,40 +26,6 @@ void FXLS89xx::run(bool sdcd) {
   bit_op8(_SENS_CONFIG1, ~SENS_CONFIG1::ACTIVE_ACT, SENS_CONFIG1::ACTIVE_ACT);
 }
 
-void FXLS89xx::sdcd(ref_updm ref, XYZ xyz, float upper_threshold, float lower_threshold, uint8_t debounce) {
-  // Set upper threshold
-  uint16_t upper_threshold_12bit=upper_threshold/0.98/pow(2,sensor_range);
-  if (upper_threshold>1024*pow(2,sensor_range+1)) upper_threshold_12bit=0x07ff;
-  else if (upper_threshold<-1024*pow(2,sensor_range+1)) upper_threshold_12bit=0x0800;
-  Serial.println(upper_threshold_12bit, HEX);
-  
-  // Set lower threshold
-  uint16_t lower_threshold_12bit=lower_threshold/0.98/pow(2,sensor_range);
-  if (lower_threshold>1024*pow(2,sensor_range+1)) lower_threshold_12bit=0x07ff;
-  else if (lower_threshold<-1024*pow(2,sensor_range+1)) lower_threshold_12bit=0x0800;
-  Serial.println(lower_threshold_12bit, HEX);
-
-  // Set configuration of debounce counters and lower/upper thresholds
-  uint8_t reg[6] = {debounce, debounce, lower_threshold_12bit&0xff, lower_threshold_12bit>>8, upper_threshold_12bit&0xff, upper_threshold_12bit>>8};
-  reg_w(_SDCD_OT_DBCNT, reg, 6);
-
-  uint8_t sdcd_conf[2] = {
-    xyz<<3|xyz,
-    ref<<SDCD_CONFIG2::REF_UPDM_SHIFT | SDCD_CONFIG2::SDCD_EN_EN
-  };
-  reg_w(_SDCD_CONFIG1, sdcd_conf, 2);
-  Serial.println(sdcd_conf[1], HEX);
-
-  // Route SDCD interruption to INT2
-  bit_op8(_INT_EN,
-    ~(INT_EN::SDCD_WT_EN_EN | INT_EN::SDCD_OT_EN_EN),
-    sdcd_wt ? INT_EN::SDCD_WT_EN_EN : INT_EN::SDCD_OT_EN_EN);
-
-  bit_op8(_INT_PIN_SEL,
-    ~(INT_PIN_SEL::SDCD_WT_INT2_INT2 | INT_PIN_SEL::SDCD_OT_INT2_INT2),
-    sdcd_wt ? INT_PIN_SEL::SDCD_WT_INT2_INT2 : INT_PIN_SEL::SDCD_OT_INT2_INT2);
-}
-
 void FXLS89xx::enable_sleep(uint16_t asleep) {
   uint8_t aslp_reg[2] = {asleep&0xff, asleep>>8};
   reg_w(_ASLP_COUNT_LSB, aslp_reg, 2);
