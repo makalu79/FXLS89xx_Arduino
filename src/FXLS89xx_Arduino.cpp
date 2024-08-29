@@ -78,29 +78,7 @@ void FXLS89xx::read_XYZ(float *pOutBuffer) {
   }
 }
 
-void FXLS89xx::EXT_TRIG_init(bool pinconfig) {
-  if (pinconfig)
-    pinMode(A0, OUTPUT);
-  digitalWrite(A0, LOW);
-  bit_op8(_SENS_CONFIG1, ~SENS_CONFIG1::ACTIVE_MASK, 0);
-  bit_op8(_INT_EN, ~INT_EN::DRDY_EN_EN, INT_EN::DRDY_EN_EN);
-  bit_op8(_SENS_CONFIG4, 0, SENS_CONFIG4::EXT_TRIG_M_M | SENS_CONFIG4::INT2_FUNC_EXT | SENS_CONFIG4::INT_POL_ACT_H);
-}
-
-void FXLS89xx::EXT_TRIG_Trigger() {
-  pinMode(A0, INPUT);
-  delay(1);
-  pinMode(A0, OUTPUT);  
-}
-
-uint8_t FXLS89xx::init(bool pinconfig) {
-  if (pinconfig) {
-    pinMode(SDA, INPUT);
-    pinMode(SCL, INPUT);
-    pinMode(2, INPUT);
-  }
+uint8_t FXLS89xx::init() {
   write_r8(_SENS_CONFIG1, SENS_CONFIG1::RST_RESET);
-  while(!digitalRead(2));
-  while(digitalRead(2));
   return read_r8(_WHO_AM_I);
 }
